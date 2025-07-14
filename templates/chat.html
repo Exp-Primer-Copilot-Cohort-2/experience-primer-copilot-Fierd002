@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chat with Source Tracking</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar with API Status -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h2>AI Chat Assistant</h2>
+            </div>
+            
+            <div class="api-status-section">
+                <h3>API Status</h3>
+                <div id="api-status" class="status-indicator">
+                    <div class="status-dot loading"></div>
+                    <span class="status-text">Checking...</span>
+                </div>
+                <div class="status-details">
+                    <small id="last-check">Last check: Never</small>
+                    <button id="refresh-status" class="refresh-btn">Refresh Status</button>
+                </div>
+            </div>
+
+            <div class="info-section">
+                <h3>Response Sources</h3>
+                <div class="source-legend">
+                    <div class="legend-item">
+                        <span class="source-badge gemini">🟢 Gemini API</span>
+                        <p>Primary AI responses</p>
+                    </div>
+                    <div class="legend-item">
+                        <span class="source-badge knowledge">🟡 Knowledge Base</span>
+                        <p>Local knowledge</p>
+                    </div>
+                    <div class="legend-item">
+                        <span class="source-badge fallback">🟠 Smart Fallback</span>
+                        <p>Contextual responses</p>
+                    </div>
+                    <div class="legend-item">
+                        <span class="source-badge emergency">🔴 Emergency</span>
+                        <p>System failure mode</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Chat Area -->
+        <div class="main-content">
+            <div class="chat-header">
+                <h1>AI Chat Interface</h1>
+                <div class="header-status">
+                    <span id="connection-status" class="connection-indicator">Connecting...</span>
+                </div>
+            </div>
+
+            <div id="chat-container" class="chat-container">
+                <div class="welcome-message">
+                    <div class="message bot-message">
+                        <div class="message-content">
+                            <div class="message-header">
+                                <span class="source-badge knowledge">🟡 Knowledge Base</span>
+                                <span class="confidence-score">95%</span>
+                            </div>
+                            <p>Welcome! I'm your AI assistant. Ask me anything and I'll show you exactly where my responses come from.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-container">
+                <form id="chat-form">
+                    <div class="input-group">
+                        <input type="text" id="message-input" placeholder="Type your message here..." autocomplete="off">
+                        <button type="submit" id="send-button">Send</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading overlay -->
+    <div id="loading-overlay" class="loading-overlay hidden">
+        <div class="spinner"></div>
+        <p>Getting response...</p>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+</body>
+</html>
